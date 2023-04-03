@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="113dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/et_score"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_below="@id/et_name"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="83dp"
+        android:layout_marginBottom="1dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/score"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/btnView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="1dp"
+        android:text="@string/view"
+        android:layout_below="@id/et_name"
+
+        />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_score"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="2dp"
+        android:text="@string/add" />
+
+    <Switch
+        android:id="@+id/sw_isHuman"
+        android:layout_width="146dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="1dp"
+        android:layout_below="@id/btnAdd"
+        android:text="@string/ishuman"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="393dp"
+        android:layout_height="349dp"
+        android:layout_below="@id/sw_isHuman"
+        android:layout_marginStart="3dp" />
+
+
+</RelativeLayout>

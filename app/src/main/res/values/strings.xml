@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FireBaseExample</string>
+    <string name="name">name</string>
+    <string name="score">score</string>
+    <string name="view">view</string>
+    <string name="add">add</string>
+    <string name="ishuman">ishuman</string>
+</resources>

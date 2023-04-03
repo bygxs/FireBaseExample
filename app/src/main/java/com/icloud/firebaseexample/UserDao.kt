@@ -15,11 +15,37 @@ class UserDao {
 
     val ID_KEY = "id"
     val NAME_KEY = "name"
-    val SCORE_KEY  = "score"
+    val SCORE_KEY = "score"
     val ISHUMAN_KEY = "is_human"
 
-    fun addUser(user:UserModel?){
-    if (user == null) return
+    constructor(activity: MainActivity) {
+        FirebaseFirestore
+            .getInstance()
+            .collection("users")
+            .addSnapshotListener (activity) { value, error ->
+                if (error != null) {
+                    Log.e(TAG, "failed to listen")
+                }
+                if (value != null) {
+                    val users = ArrayList<UserModel>()
+                    for (document in value) {
+                        val id = document.getString(ID_KEY)
+                        val name = document.getString(NAME_KEY)
+                        val score = document.getLong(SCORE_KEY)
+                        val isHuman = document.getBoolean(ISHUMAN_KEY)
+
+                        val user = UserModel(id, name, score, isHuman)
+                        users.add(user)
+                    }
+                    activity.showUsers(users)
+                    Log.e(TAG, "Updated user list")
+                }
+            }
+    }
+
+
+    fun addUser(user: UserModel?) {
+        if (user == null) return
         val dataToStore = HashMap<String, Object>()
 
         dataToStore.put(ID_KEY, user.id as Object)
@@ -27,17 +53,17 @@ class UserDao {
         dataToStore.put(SCORE_KEY, user.score as Object)
         dataToStore.put(ISHUMAN_KEY, user.isHuman as Object)
 
-       // FirebaseFirestore.getInstance().collection("users").document("users/${user.id}")
+        // FirebaseFirestore.getInstance().collection("users").document("users/${user.id}")
 
         FirebaseFirestore
             .getInstance()
             .document("users/${user.id}")
             .set(dataToStore)
             .addOnSuccessListener { log -> Log.i(TAG, "user added to Firestore with id: $user") }
-            .addOnSuccessListener { log -> Log.e(TAG,"failed add user") }
+            .addOnSuccessListener { log -> Log.e(TAG, "failed add user") }
     }
 
-    fun getUsers(activity: MainActivity){
+    fun getUsers(activity: MainActivity) {
         val userList = ArrayList<UserModel>()
 
         FirebaseFirestore
@@ -45,7 +71,7 @@ class UserDao {
             .collection("users")
             .get()
             .addOnSuccessListener { users ->
-                for (document in users ){
+                for (document in users) {
                     val id = document.getString(ID_KEY)
                     val name = document.getString(NAME_KEY)
                     val score = document.getLong(SCORE_KEY)
@@ -56,7 +82,7 @@ class UserDao {
                 }
                 activity.showUsers(userList)
             }
-            .addOnFailureListener { log -> Log.e(TAG,"failed FETCH user")}
+            .addOnFailureListener { log -> Log.e(TAG, "failed FETCH user") }
     }
 
     fun deleteUser(user: String?) {
@@ -65,11 +91,8 @@ class UserDao {
             .getInstance()
             .document("users/${user}")
             .delete()
-            .addOnSuccessListener {
-                    log -> Log.i(TAG,"user deleted sucessfully ")
-
-            }
-            .addOnFailureListener { log -> Log.e(TAG,"failed FETCH user") }
+            .addOnSuccessListener { log -> Log.i(TAG, "user deleted sucessfully ") }
+            .addOnFailureListener { log -> Log.e(TAG, "failed FETCH user") }
     }
 
 }

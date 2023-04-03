@@ -18,11 +18,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binder.root)
 
 
-        userDao = UserDao()
+        userDao = UserDao(this)
 
 
         binder.btnAdd.setOnClickListener {
-         val user =   createUser()
+            val user = createUser()
             userDao.addUser(user)
 
         }
@@ -31,35 +31,31 @@ class MainActivity : AppCompatActivity() {
             userDao.getUsers(this)
         }
         binder.listView.setOnItemLongClickListener { parent, view, position, id ->
-                val selectedUser = parent.getItemAtPosition(position) as UserModel
-                userDao.deleteUser(selectedUser.id)
+            val selectedUser = parent.getItemAtPosition(position) as UserModel
+            userDao.deleteUser(selectedUser.id)
             userDao.getUsers(this)
-                //showUsers()
-              true
+            //showUsers()
+            true
         }
     }
 
-    fun createUser(): UserModel?{
+    fun createUser(): UserModel? {
 
         try {
             val name = binder.etName.text.toString()
             val score = binder.etScore.text.toString().toLong()
             val isHuman = binder.swIsHuman.isChecked
 
-            val user = UserModel(UUID.randomUUID().toString(),name,score,isHuman)
+            val user = UserModel(UUID.randomUUID().toString(), name, score, isHuman)
             return user
-        } catch (e:java.lang.Exception){
+        } catch (e: java.lang.Exception) {
             return null
         }
-
-
     }
 
-    fun showUsers(userList: ArrayList<UserModel>){
+    fun showUsers(userList: ArrayList<UserModel>) {
 
         val adapter = ArrayAdapter(this, R.layout.simple_list_item_1, userList)
         binder.listView.adapter = adapter
-            }
-
-
+    }
 }
